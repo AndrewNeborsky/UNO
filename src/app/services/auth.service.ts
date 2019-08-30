@@ -19,6 +19,10 @@ export class AuthService {
     return this.http.post(this.url + '/login', user)
   }
 
+  socialLogin (id: Number) {
+    return this.http.post(this.url + '/socialLogin', {id})
+  }
+
   logout () {
     localStorage.removeItem('token')
   }

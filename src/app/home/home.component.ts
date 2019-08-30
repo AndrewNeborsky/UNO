@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
         res => this.events = res['events'],
         err => {
           if (err instanceof HttpErrorResponse && err.status === 401) {
-            this.router.navigate(['/login'])
+            this.router.navigate(['/auth'])
           }
         }
       )

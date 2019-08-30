@@ -1,0 +1,35 @@
+<div class="wrapper">
+        <div class="page-header" style="background-image: url('./assets/img/login-image.jpg');">
+            <div class="filter"></div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-4 col-sm-6 mr-auto ml-auto">
+                          <div class="card card-register">
+                              <h3 class="title">Welcome</h3>
+                              <div class="social-line text-center">
+                                  <a href="http://localhost:3000/api/login/facebook" class="btn btn-neutral btn-facebook btn-just-icon">
+                                      <i class="fa fa-facebook-square"></i>
+                                  </a>
+                                  <a href="http://localhost:3000/api/login/twitter" class="btn btn-neutral btn-twitter btn-just-icon">
+                                      <i class="fa fa-twitter"></i>
+                                  </a>
+                              </div><br/>
+                              <ngb-tabset type="pills" class="nav-pills-danger" [justify]="'center'">
+                                    <ngb-tab title="Login">
+                                      <ng-template ngbTabContent>
+                                        <app-login></app-login>
+                                      </ng-template>
+                                    </ngb-tab>
+                                    <ngb-tab title="Register">
+                                      <ng-template ngbTabContent>
+                                          <app-register></app-register>
+                                      </ng-template>
+                                    </ngb-tab>
+                                </ngb-tabset>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+    

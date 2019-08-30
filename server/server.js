@@ -1,11 +1,16 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const api = require('./router/api');
-const cors = require('cors');
+const express = require('express')
+const bodyParser = require('body-parser')
+const api = require('./router/api')
+const cors = require('cors')
+const passport = require('passport')
 
-const app = express();
-app.use(cors());
-app.use(bodyParser.json());
-app.use('/api', api);
+const app = express()
+app.use(cors())
+app.use(bodyParser.json())
+var expressSession = require('express-session')
+app.use(expressSession({secret: 'mySecretKey'}))
+app.use(passport.initialize())
+app.use(passport.session())
+app.use('/api', api)
 
 app.listen(3000, () => console.log('Server running on port: 3000'))
