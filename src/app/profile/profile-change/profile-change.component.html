@@ -1,0 +1,66 @@
+<div class="wrapper">
+        <div class="page-header page-header-xs" data-parallax="true" [style.background-image]="background">
+            <div class="filter"></div>
+            <div ng2FileDrop
+                [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+                (fileOver)="fileOverBase($event)"
+                [uploader]="backgroundUploader"
+                class="rounded my-drop-zone p-5 m-3 motto text-center">
+                <h5>Drag and Drop your background images here or</h5>
+                <label for="backgroundUpload" class="btn btn-outline-danger btn-sm">Browse</label> 
+                <input type="file" id="backgroundUpload" class="custom-control-input" ng2FileSelect [uploader]="backgroundUploader"/>
+            </div>
+        </div>
+        <div class="section profile-content">
+            <div class="container">
+                <div class="owner">
+                    <div class="avatar position-relative">
+                        <img src="{{user.profile_img}}" alt="Circle Image" class="img-circle img-no-padding img-responsive">
+                        <label for="avatarUpload" id="avatarLabel" class="btn btn-outline-default btn-just-icon"><i class="fa fa-download" aria-hidden="true"></i></label> 
+                        <input type="file" id="avatarUpload" class="custom-control-input" ng2FileSelect [uploader]="avatarUploader"/>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-3">         
+                        <div class="input-group" [ngClass]="{'input-group-focus': inputNameFocus === true}">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="nc-icon nc-circle-10"></i>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" name="name" placeholder="Name" 
+                            [(ngModel)]="user.name" (focus)="inputNameFocus=true" (blur)="inputNameFocus=false">
+                        </div>
+                    </div>
+                    <div class="col-md-4">         
+                        <div class="input-group" [ngClass]="{'input-group-focus': inputEmailFocus === true}">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="nc-icon nc-email-85"></i>
+                                </span>
+                            </div>
+                            <input type="email" class="form-control" name="email" placeholder="Email" 
+                            [(ngModel)]="user.email" (focus)="inputEmailFocus=true" (blur)="inputEmailFocus=false">
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-danger" (click)="changeProfile()">Change</button>
+                </div><br/>
+                <div>
+                    <h3>About me:</h3><br/>
+                    <ngb-tabset type="pills" class="nav-pills-danger">
+                        <ngb-tab title="Text">
+                            <ng-template ngbTabContent>
+                                <br/><textarea class="form-control" rows="15" [(ngModel)]="user.about"></textarea>
+                            </ng-template>
+                        </ngb-tab>
+                        <ngb-tab title="View">
+                            <ng-template ngbTabContent>
+                                <br/><div class="story"><markdown [data]="user.about"></markdown></div>
+                            </ng-template>
+                        </ngb-tab>
+                    </ngb-tabset>
+                </div>
+            </div>
+        </div>
+    </div>
+    

@@ -1,6 +1,6 @@
 .alert{
     border: 0;
-    border-radius: 0;
+    border-radius: $border-radius-small;
     color: #FFFFFF;
     padding: 10px 15px;
     font-size: 14px;
@@ -9,10 +9,24 @@
         font-size: $font-size-large;
         color: $white-color;
     }
+    &.alert-success{
+        background-color: lighten($success-color, 5%);
+    }
 
-    .container &{
-        border-radius: 4px;
+    &.alert-danger{
+        background-color: lighten($danger-color, 5%);
+    }
 
+    &.alert-warning{
+        background-color: lighten($warning-color, 5%);
+    }
+
+    &.alert-info{
+        background-color: lighten($info-color, 5%);
+    }
+
+    &.alert-primary{
+        background-color: lighten($primary-color, 5%);
     }
     .navbar &{
         border-radius: 0;
@@ -45,17 +59,4 @@
         margin-top: -5px;
         font-weight: $font-weight-bold;
     }
-
-}
-.alert-info{
-    background-color: $bg-info;
-}
-.alert-success {
-    background-color: $bg-success;
-}
-.alert-warning {
-    background-color: $bg-warning;
-}
-.alert-danger {
-    background-color: $bg-danger;
 }

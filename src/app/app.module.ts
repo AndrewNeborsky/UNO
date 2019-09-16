@@ -5,6 +5,12 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthService } from './services/auth.service';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { CookieService } from 'ngx-cookie-service';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatSortModule} from '@angular/material/sort';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { MarkdownModule } from 'ngx-markdown';
+import { FileUploadModule } from 'ng2-file-upload';
+import { ToastrModule } from 'ngx-toastr';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,6 +23,16 @@ import { InerseptorService } from './services/interseptor.service';
 import { FooterComponent } from './shared/footer/footer.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { ProfileComponent } from './profile/profile.component';
+import { CreaterComponent } from './company/creater/creater.component';
+import { CompanyComponent } from './company/company.component';
+import { ProfileChangeComponent } from './profile/profile-change/profile-change.component';
+import { PledgeComponent } from './company/pledge/pledge.component';
+import { CompanyFilterPipe } from './pipes/company-filter.pipe';
+import { BonuceComponent } from './company/creater/bonuce-creater/bonuce-creater.component';
+import { NewsCreaterComponent } from './company/creater/news-creater/news-creater.component';
+import { NewsComponent } from './company/news/news.component';
+import { CommentsComponent } from './company/comments/comments.component';
+import { CompanyTableComponent } from './profile/company-table/company-table.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +43,17 @@ import { ProfileComponent } from './profile/profile.component';
     HomeComponent,
     NavbarComponent,
     FooterComponent,
-    ProfileComponent
+    ProfileComponent,
+    CreaterComponent,
+    CompanyComponent,
+    ProfileChangeComponent,
+    PledgeComponent,
+    CompanyFilterPipe,
+    BonuceComponent,
+    NewsCreaterComponent,
+    NewsComponent,
+    CommentsComponent,
+    CompanyTableComponent
   ],
   imports: [
     BrowserModule,
@@ -35,6 +61,12 @@ import { ProfileComponent } from './profile/profile.component';
     HttpClientModule,
     AppRoutingModule,
     NgbModule,
+    BrowserAnimationsModule,
+    MatSortModule,
+    MatPaginatorModule,
+    MarkdownModule.forRoot(),
+    FileUploadModule,
+    ToastrModule.forRoot(),
   ],
   providers: [AuthService, AuthGuard, CookieService,
   {

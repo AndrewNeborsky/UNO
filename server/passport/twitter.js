@@ -1,6 +1,6 @@
-var TwitterStrategy  = require('passport-twitter').Strategy;
-var User = require('../models/user');
-var twConfig = require('../configs/tw');
+const TwitterStrategy  = require('passport-twitter').Strategy;
+const User = require('../models/user');
+const twConfig = require('../configs/tw');
 
 module.exports = function(passport) {
 
@@ -15,18 +15,18 @@ module.exports = function(passport) {
     	process.nextTick(function() {
 
 	        User.findOne({ id: profile.id, provider: profile.provider }, function(err, user) {
-
 	            if (err)
 	                return done(err);
 	            if (user) {
 	                return done(null, user);
 	            } else {
-					var user = new User();
+					let user = new User();
 					
 					user.id = profile.id
-					user.name = profile.displayName
-                    user.email = profile.emails[0].value
                     user.provider = profile.provider
+					user.name = profile.displayName
+					user.email = profile.emails[0].value
+					user.profile_img = profile.photos[0].value.replace('_normal', '')
                     
 	                user.save(function(err) {
 	                    if (err)

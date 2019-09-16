@@ -1,0 +1,9 @@
+.story{
+    min-height: 340px
+}
+
+.btn_delete {
+    position: absolute;
+    right: 1%;
+    top: 1%;
+}

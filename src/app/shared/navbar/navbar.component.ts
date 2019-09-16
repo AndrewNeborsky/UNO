@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { AuthService } from 'src/app/services/auth.service';
-import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-navbar',
@@ -10,20 +10,19 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class NavbarComponent implements OnInit {
 
-    public userId: String;
-
     private toggleButton: any;
     private sidebarVisible: boolean;
+    private user_id: string;
 
-    constructor(public location: Location, private element : ElementRef, private auth: AuthService, private cookieService: CookieService) {
+    constructor(public location: Location, private element : ElementRef, private auth: AuthService, private router: Router) {
         this.sidebarVisible = false;
     }
 
     ngOnInit() {
         const navbar: HTMLElement = this.element.nativeElement;
         this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
-        this.userId = this.cookieService.get('id')
     }
+
     sidebarOpen() {
         const toggleButton = this.toggleButton;
         const html = document.getElementsByTagName('html')[0];
@@ -34,12 +33,14 @@ export class NavbarComponent implements OnInit {
 
         this.sidebarVisible = true;
     };
+
     sidebarClose() {
         const html = document.getElementsByTagName('html')[0];
         this.toggleButton.classList.remove('toggled');
         this.sidebarVisible = false;
         html.classList.remove('nav-open');
     };
+
     sidebarToggle() {
         if (this.sidebarVisible === false) {
             this.sidebarOpen();
@@ -48,22 +49,32 @@ export class NavbarComponent implements OnInit {
         }
     }
 
-    isAuth() {
-      var titlee = this.location.prepareExternalUrl(this.location.path());
-      if(titlee.charAt(0) === '#'){
-          titlee = titlee.slice( 1 );
-      }
-        if( titlee === '/auth' ) {
-            return true;
+    checkPath(values: String) {
+        let path = this.location.prepareExternalUrl(this.location.path());
+        let paths = values.split(' ')
+        if(path.charAt(0) === '#'){
+            path = path.slice( 1 );
         }
-        else {
-            return false;
+        for (let i = 0; i < paths.length; i++){
+            if(~path.indexOf(paths[i])) {
+                return true;
+            }
         }
+        return false
     }
-    isLogin(){
+
+    checkLogin(){
         return !!this.auth.getToken();
     }
+
     logout() {
         this.auth.logout()
+    }
+
+    getProfile() {
+        this.auth.getThisUser().subscribe(res => {
+            this.user_id = res._id
+            this.router.navigate(['/profile', this.user_id])
+        })
     }
 }

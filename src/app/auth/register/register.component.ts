@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../models/user.model';
 import { Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-register',
@@ -11,9 +10,10 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class RegisterComponent implements OnInit {
   
+  @Output() alertOpen = new EventEmitter<string>();
   public user : User;
 
-  constructor(private auth: AuthService, private router: Router, private cookieService: CookieService) {
+  constructor(private auth: AuthService, private router: Router) {
     this.user = new User ();
   }
 
@@ -21,15 +21,19 @@ export class RegisterComponent implements OnInit {
   }
 
   register(){
-    this.auth.register(this.user).subscribe(
-      res => {
-        console.log(res)
-        localStorage.setItem('token', res['token'])
-        this.cookieService.set('id', res['id'])
-        this.router.navigate(['/'])
-      },
-      err => console.log(err)
-      )
+    if (this.user.name && this.user.email && this.user.password) {
+      this.auth.register(this.user).subscribe(
+        res => {
+          localStorage.setItem('token', res['token'])
+          this.router.navigate(['/'])
+        },
+        err => {
+          if(err.status === 401) this.alertOpen.emit(err['error'])
+        }
+        )
+      } else {
+        this.alertOpen.emit('Please fill in all the fields')
+      }
   }
 
 }

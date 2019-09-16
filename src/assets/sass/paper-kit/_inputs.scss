@@ -58,7 +58,7 @@
     & + .form-control-feedback{
         border-radius: $border-radius-large;
         font-size: $font-size-base;
-        color: $danger-color;
+        color: $white-color;
         font-size: .8rem;
         position: absolute;
         top: 100%;
@@ -75,6 +75,10 @@
 .input-lg{
     height: 55px;
     padding: $padding-large-vertical $padding-large-horizontal;
+}
+.input-sm{
+    height: 28px;
+    padding: $padding-small-vertical $padding-small-horizontal;
 }
 
 .has-error{
@@ -125,7 +129,7 @@ textarea.form-control{
     position: relative;
 }
 
-.register-form .form-control{
+.register-form .login-form .form-control{
     border: 1px solid transparent !important;
 }
 #inputs {

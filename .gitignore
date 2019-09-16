@@ -41,6 +41,11 @@ yarn-error.log
 testem.log
 /typings
 /server/configs
+.firebaserc
+/.firebase
+database.rules.json
+firebase.json
+/src/assets/img
 
 # System Files
 .DS_Store

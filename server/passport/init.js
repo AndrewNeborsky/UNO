@@ -1,6 +1,6 @@
-var facebook = require('./facebook');
-var twitter = require('./twitter');
-var User = require('../models/user');
+const facebook = require('./facebook');
+const twitter = require('./twitter');
+const User = require('../models/user');
 
 module.exports = function(passport){
     passport.serializeUser(function(user, done) {

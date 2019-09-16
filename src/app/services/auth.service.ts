@@ -7,7 +7,7 @@ import { User } from '../models/user.model';
 })
 export class AuthService {
 
-  private url = 'http://localhost:3000/api'
+  private url = 'http://localhost:3000/api/auth'
 
   constructor(private http: HttpClient) { }
 
@@ -29,5 +29,9 @@ export class AuthService {
 
   getToken(){
     return localStorage.getItem('token')
+  }
+
+  getThisUser() {
+    return this.http.get<User>(this.url + '/user')
   }
 }

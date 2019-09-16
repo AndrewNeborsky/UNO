@@ -1,0 +1,55 @@
+<div class="wrapper"> 
+    <div class="page-header page-header-xs" data-parallax="true" [style.background-image]="background">
+        <div class="filter"></div>
+        <div class="container">
+            <div class="motto text-center">
+                <h1>{{company.name}}</h1>
+                <h3>Expiration date: <i>{{company.expiration_date | date}}</i></h3><br/>
+                <p><ngb-progressbar type="danger" value="{{company.presently / company.goal * 100}}" [striped]="true" [animated]="true" [height]="'25px'">
+                    <i>{{company.presently}}/<b><b>{{company.goal}}</b></b> ({{company.presently / company.goal * 100 | number: '.0-2'}} %)</i>
+                </ngb-progressbar></p><br/>
+                <button class="btn btn-outline-danger btn-round" routerLink="pledge">Support this project</button>
+            </div>
+        </div>
+    </div><br>
+    <div class="container">
+        <div class="row">
+            <div class="col-8 mx-auto">
+                <div class="card page-carousel">
+                    <ngb-carousel>
+                        <ng-template ngbSlide *ngIf="company.video">
+                            <div class="thumb-wrap">
+                                <iframe class="e2e-iframe-trusted-src rounded" width="720" height="480" [src]="videoUrl" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        </ng-template>
+                        <ng-template ngbSlide *ngFor="let image of company.images">
+                            <div class="picsum-img-wrapper">
+                                <img [src]="image" [alt]="image">
+                            </div>
+                        </ng-template>
+                    </ngb-carousel>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <ngb-tabset [justify]="'center'">
+            <ngb-tab title="Story">
+            <ng-template ngbTabContent>
+                <markdown [data]="company.story"></markdown>
+            </ng-template>
+            </ngb-tab>
+            <ngb-tab title="News">
+            <ng-template ngbTabContent>
+                <app-news [news]="company.news"></app-news>
+            </ng-template>
+            </ngb-tab>
+            <ngb-tab title="Comments">
+            <ng-template ngbTabContent>
+                <app-comments [user]="thisUser" [comments]="company.comments" (commentSender)="sendComment($event)"></app-comments>
+            </ng-template>
+            </ngb-tab>
+        </ngb-tabset>
+    </div>
+</div>

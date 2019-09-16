@@ -1,0 +1,168 @@
+<div class="page-header page-header-xs" data-parallax="true" [style.background-image]="background">
+    <div class="filter"></div>
+    <div class="motto text-center"> 
+        <button class="btn btn-outline-danger" routerLink="../">
+            <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+        </button>
+        <h3>Here will be the first image from the gallery</h3>
+    </div>
+</div><br/>
+
+<div class="container">
+    <div class="row col-md-5">
+        <div class="form-group mr-2">
+            <input type="text" class="form-control" [(ngModel)]="company.name" 
+                name="Company name" placeholder="Company name" required>
+        </div>
+        <ng-container *ngIf="user_id; else elseTemplate">
+            <button class="btn btn-danger form-group" (click)="createCompany()">Create</button>
+        </ng-container>
+        <ng-template #elseTemplate>
+            <button class="btn btn-danger form-group" (click)="changeCompany()">Change</button>
+        </ng-template>
+    </div>
+    <div class="form-row">
+        <div class="col-md-3">         
+            <div class="input-group" [ngClass]="{'input-group-focus': inputGoalFocus === true}">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                        <i class="fa fa-money" aria-hidden="true"></i>
+                    </span>
+                </div>
+                <input type="number" class="form-control" placeholder="Company goal" [(ngModel)]="company.goal"
+                    name="Company goal" (focus)="inputGoalFocus=true" (blur)="inputGoalFocus=false" required>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="input-group" [ngClass]="{'input-group-focus': inputDataFocus === true}">
+                <input class="form-control" placeholder="Expiration date"
+                        name="dp" [(ngModel)]="modelDate" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()"
+                        name="Expiration date" (focus)="inputDataFocus=true" (blur)="inputDataFocus=false" required>
+                <span class="input-group-append">
+                    <span class="input-group-text"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                </span>
+            </div>
+        </div>
+    </div><br/>
+    <div class="input-group" [ngClass]="{'input-group-focus': inputVideoFocus === true}">
+        <div class="input-group-prepend">
+            <span class="input-group-text">
+                <i class="nc-icon nc-image" aria-hidden="true"></i>
+            </span>
+        </div>
+        <input type="text" class="form-control" (change)="getSafeUrl($event.srcElement.value)" 
+        [value]="company.video"  placeholder="YouTube video link" 
+        (focus)="inputVideoFocus=true" (blur)="inputVideoFocus=false">
+    </div><br/>
+    <div *ngIf="company.video">
+        <iframe class="e2e-iframe-trusted-src" width="720" height="480" 
+            [src]="videoUrl" frameborder="0" allowfullscreen></iframe>
+    </div>
+
+    <div ng2FileDrop
+        [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+        (fileOver)="fileOverBase($event)"
+        [uploader]="uploader"
+        class="rounded my-drop-zone p-4 m-3 text-center">
+        Drag and Drop your images here or
+        <label for="upload" class="btn btn-outline-danger btn-sm">Browse</label> 
+        <input type="file" id="upload" class="custom-control-input" ng2FileSelect [uploader]="uploader" multiple/>
+    </div>
+    <div class="row m-2 img_box"> 
+        <div class="mx-2 position-relative" *ngFor="let image of company.images" >
+            <button class="btn btn-danger btn-just-icon btn-sm m-1 btn_delete" (click)="deleteImage(image)">
+                <i class="fa fa-trash"></i>
+            </button>
+            <a [href]="image" target="_blank"><img [src]="image" class="rounded img-fluid img_el mb-1"></a>
+        </div>
+    </div>
+    <ngb-tabset [justify]="'center'">
+        <ngb-tab title="Story">
+            <ng-template ngbTabContent>
+                <ngb-tabset type="pills" class="nav-pills-danger">
+                    <ngb-tab title="Text">
+                        <ng-template ngbTabContent>
+                            <br/><textarea class="form-control" name="Story"
+                                rows="15" [(ngModel)]="company.story" required></textarea>
+                        </ng-template>
+                    </ngb-tab>
+                    <ngb-tab title="View">
+                        <ng-template ngbTabContent>
+                            <br/><div class="story"><markdown [data]="company.story"></markdown></div>
+                        </ng-template>
+                    </ngb-tab>
+                </ngb-tabset>
+            </ng-template>
+        </ngb-tab>
+        <ngb-tab title="News">
+            <ng-template ngbTabContent>
+                <app-news-creater (sendNews)="addNews($event)"></app-news-creater>
+                <br/>
+                <div class="modal fade" id="newsWindow" tabindex="-1" role="dialog" 
+                    aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">{{newsWindow.title}}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>
+                                    <img *ngIf="newsWindow.image" [src]="newsWindow.image" class="rounded w-100">
+                                </p><br/>
+                                <markdown [data]="newsWindow.text"></markdown>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger m-3" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex flex-column-reverse">
+                    <div class="card" *ngFor="let el of company.news">
+                        <div class="card-header d-flex">
+                            <h2 class="mr-auto">{{el.title}}</h2>
+                            <p>{{el.create_date | date}}</p>
+                            <button class="btn btn-danger btn-just-icon btn-sm ml-2" 
+                                (click)="deleteNews(el)">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">
+                                <markdown [data]="(el.text | slice:0:200) + '....'"></markdown>
+                            </p>
+                        </div>
+                        <div class="card-footer text-muted">
+                            <button class="btn btn-danger btn-lg" data-toggle="modal" 
+                                data-target="#newsWindow" (click)="openNews(el)">
+                                Learn more
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </ngb-tab>
+        <ngb-tab title="Bonuces">
+            <ng-template ngbTabContent>
+                <app-bonuce-creater (sendBonuce)="addBonuce($event)"></app-bonuce-creater>
+                <br/>
+                <div class="card " *ngFor="let el of company.bonuces">
+                    <div class="card-header d-flex">
+                        <div class="align-self-center mr-auto">{{el.name}}</div>
+                        <div class="align-self-center">Price: {{el.price}} C.U.</div>
+                        <button class="btn btn-danger btn-just-icon btn-sm" 
+                            (click)="deleteBonuce(el)">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">{{el.about}}</p>
+                    </div>
+                </div>
+            </ng-template>
+        </ngb-tab>
+    </ngb-tabset>
+</div>

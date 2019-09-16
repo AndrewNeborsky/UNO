@@ -1,0 +1,18 @@
+.story{
+  min-height: 340px
+}
+.about{
+  min-height: 100px
+}
+.img_box {
+  overflow-y: auto;
+}
+.img_el {
+  width: 200px;
+  height: auto;
+}
+.btn_delete {
+  position: absolute;
+  right: 1%;
+  top: 1%;
+}

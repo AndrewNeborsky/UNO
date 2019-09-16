@@ -1,0 +1,28 @@
+<form class="mx-1" (submit)="sendComment()" #commentForm="ngForm" *ngIf="checkLogin()">
+    <textarea class="form-control" rows="4" name="text" required [(ngModel)]="comment.text"></textarea>
+    <br/>
+    <button type="submit" [disabled]="!commentForm.form.valid" class="btn btn-danger">Send</button>
+</form>
+<div class="text-center" *ngIf="!checkLogin()">
+    <h3>Only registered users can write comments</h3>
+</div>
+<br/>
+<div *ngFor="let el of comments">
+    <div class="following">
+        <div class="d-flex">
+            <a href="#" [routerLink]="['/profile', el.user_id]">
+                <img [src]="el.profile_img" alt="Circle Image" class="img-circle img-no-padding img-responsive">
+            </a>
+            <div class="col">
+                <div class="border rounded">
+                    <div class="card-header bg-danger">
+                        <a href="#" class="text-white" [routerLink]="['/profile', el.user_id]">
+                            {{el.user_name}}
+                        </a>
+                    </div>
+                    <div class="card-body">{{el.text}}</div>
+                </div>
+            </div>
+        </div>
+    </div><br/>
+</div>

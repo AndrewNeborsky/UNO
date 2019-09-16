@@ -1,26 +1,23 @@
-<form class="register-form" (submit)="login()">
+<form class="login-form" (submit)="login()">
     <label>Email</label>
     <div class="input-group form-group-no-border">
-    <div class="input-group-prepend">
-        <span class="input-group-text">
-            <i class="nc-icon nc-email-85"></i>
-        </span>
-    </div>
+        <div class="input-group-prepend">
+            <span class="input-group-text">
+                <i class="nc-icon nc-email-85"></i>
+            </span>
+        </div>
 
-        <input type="text" class="form-control" name="email" placeholder="Email" [(ngModel)]="user.email">
+        <input type="text" class="form-control" name="email" placeholder="Email" [(ngModel)]="user.email" required>
     </div>
 
     <label>Password</label>
     <div class="input-group form-group-no-border">
-    <div class="input-group-prepend">
-        <span class="input-group-text">
-            <i class="nc-icon nc-key-25"></i>
-        </span>
-    </div>
-        <input type="password" class="form-control" name="password" placeholder="Password" [(ngModel)]="user.password">
+        <div class="input-group-prepend">
+            <span class="input-group-text">
+                <i class="nc-icon nc-key-25"></i>
+            </span>
+        </div>
+        <input type="password" class="form-control" name="password" placeholder="Password" [(ngModel)]="user.password" #password="ngModel" required>
     </div>
     <button type="submit" class="btn btn-danger btn-block btn-round">Log in</button>
 </form>
-<div class="forgot">
-    <a href="#" class="btn btn-link btn-danger">Forgot password?</a>
-</div>

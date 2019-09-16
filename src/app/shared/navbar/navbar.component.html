@@ -11,11 +11,11 @@
         <div class="navbar-collapse" id="navbarToggler">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" [routerLink]="['/profile', userId]"><i class="nc-icon nc-single-02"></i> Profile</a>
+                    <a class="nav-link" *ngIf="checkLogin() && !checkPath('auth '+ user_id)" (click)="getProfile()"><i class="nc-icon nc-single-02"></i> Profile</a>
                 </li>
-                <li class="nav-item" *ngIf="!isAuth()">
-                    <a href="" class="btn btn-danger btn-round" *ngIf="!isLogin()" routerLink="/auth" >Log in</a>
-                    <a href="" class="btn btn-danger btn-round" *ngIf="isLogin()" (click)="logout()" routerLink="/auth">Log out</a>
+                <li class="nav-item" *ngIf="!checkPath('auth')">
+                    <a href="#" class="btn btn-danger btn-round" *ngIf="!checkLogin()" routerLink="/auth" >Log in</a>
+                    <a href="#" class="btn btn-danger btn-round" *ngIf="checkLogin()" (click)="logout()" routerLink="/auth">Log out</a>
                 </li>
             </ul>
         </div>

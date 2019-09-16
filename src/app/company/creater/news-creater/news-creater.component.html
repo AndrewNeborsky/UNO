@@ -1,0 +1,39 @@
+<form (submit)="addNews(newsForm)" #newsForm="ngForm" *ngIf="isAdd">
+    <div class="row">
+        <div class="col-md-8">
+            <input type="text" class="form-control" name="title" placeholder="Title"[(ngModel)]="news.title" required>
+        </div>
+        <button type="submit" class="btn btn-danger form-group" [disabled]="!newsForm.form.valid">Add</button>
+    </div>
+    <div ng2FileDrop draggable="false"
+        [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+        (fileOver)="fileOverBase($event)"
+        [uploader]="imageUploader"
+        class="rounded my-drop-zone p-4 m-3 text-center">
+        Drag and Drop your news images here or
+        <label for="imageUploader" class="btn btn-outline-danger btn-sm">Browse</label> 
+        <input type="file" id="imageUploader" class="custom-control-input" ng2FileSelect [uploader]="imageUploader"/>
+        <br/>
+    </div>
+    <div *ngIf="news.image"  class="position-relative w-75 mx-auto">
+        <button type="button" class="btn btn-danger btn-just-icon btn-sm m-1 btn_delete" (click)="deleteNewsImage()">
+            <i class="fa fa-trash"></i>
+        </button>
+        <img [src]="news.image" class="rounded w-100">
+    </div>
+    <h3>Content:</h3><br/>
+    <ngb-tabset type="pills" class="nav-pills-danger">
+        <ngb-tab title="Text">
+            <ng-template ngbTabContent>
+                <br/><textarea class="form-control"
+                    rows="15" name='text' [(ngModel)]="news.text" required></textarea>
+            </ng-template>
+        </ngb-tab>
+        <ngb-tab title="View">
+            <ng-template ngbTabContent>
+                <br/><div class="story"><markdown [data]="news.text"></markdown></div>
+            </ng-template>
+        </ngb-tab>
+    </ngb-tabset>
+</form>
+<p class="text-center" *ngIf="!isAdd"><button class="btn btn-danger" (click)="isAdd=true">Add News</button></p>

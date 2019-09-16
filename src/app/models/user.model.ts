@@ -1,12 +1,11 @@
 export class User {
-    constructor(){
-        this.name = '';
-        this.email = '';
-        this.password = '';
-        this.isBlock = false;
-    }
-    public name;
-    public email;
-    public password;
-    public isBlock;
+    public _id: string
+    public name: string;
+    public email: string;
+    public password: string;
+    public isBlock: boolean;
+    public profile_img: string;
+    public background: string;
+    public about: string;
+    public access: string;
 }

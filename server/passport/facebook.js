@@ -1,6 +1,6 @@
-var FacebookStrategy = require('passport-facebook').Strategy;
-var User = require('../models/user');
-var fbConfig = require('../configs/fb');
+const FacebookStrategy = require('passport-facebook').Strategy;
+const User = require('../models/user');
+const fbConfig = require('../configs/fb');
 
 module.exports = function(passport) {
 
@@ -8,7 +8,7 @@ module.exports = function(passport) {
         clientID: fbConfig.clientID,
         clientSecret: fbConfig.clientSecret,
         callbackURL: fbConfig.callbackURL,
-        profileFields: ['id', 'email', 'displayName']
+        profileFields: ['id', 'email', 'displayName', 'picture.type(large)']
     },
 
     function(access_token, refresh_token, profile, done) {
@@ -22,12 +22,13 @@ module.exports = function(passport) {
                 if (user) {
                     return done(null, user)
                 } else {
-                    var user = new User()
+                    let user = new User()
 
                     user.id = profile.id
                     user.name = profile.displayName
                     user.email = profile.emails[0].value
                     user.provider = profile.provider
+                    user.profile_img = profile.photos[0].value
 
                     user.save(function(err) {
                         if (err)
