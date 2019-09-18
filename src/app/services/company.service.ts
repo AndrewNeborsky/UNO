@@ -40,4 +40,15 @@ export class CompanyService {
   getUserCompanies(user_id: string) {
     return this.http.get<Company[]>(this.url + 'user_companies/' + user_id)
   }
+
+  getLastUpdateCompanies() {
+    return this.http.get<Company[]>(this.url + 'last_update')
+  }
+
+  deleteUserCompanies(id: string){
+    return this.http.post(this.url + 'delete_user_companies', {id})
+  }
+  deleteCompany(id: string){
+    return this.http.post(this.url + 'delete', {id})
+  }
 }

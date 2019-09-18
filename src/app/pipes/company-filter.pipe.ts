@@ -9,7 +9,7 @@ export class CompanyFilterPipe implements PipeTransform {
 
   transform(companies: Company[], nameSearch?: string, minGoalSearch?: number, maxGoalSearch?: number,
     minPresentlySearch?: number, maxPresentlySearch?: number, 
-    expDateSearch?: NgbDate): any {
+    minExpDateSearch?: NgbDate, maxExpDateSearch?: NgbDate): any {
     companies = companies.filter((company: Company) => {
       return company.name.toLocaleLowerCase().includes(nameSearch?nameSearch.toLocaleLowerCase():'')
     })
@@ -33,8 +33,15 @@ export class CompanyFilterPipe implements PipeTransform {
         return isNaN(maxPresentlySearch)?true:company.presently <= maxPresentlySearch
       })
     }
-    if(expDateSearch) {
-      let date = new Date(expDateSearch.year, expDateSearch.month - 1, expDateSearch.day)
+    if(minExpDateSearch) {
+      let date = new Date(minExpDateSearch.year, minExpDateSearch.month - 1, minExpDateSearch.day)
+      companies = companies.filter((company: Company) => {
+        company.expiration_date = new Date(company.expiration_date)
+        return company.expiration_date <= date
+      })
+    }
+    if(maxExpDateSearch) {
+      let date = new Date(maxExpDateSearch.year, maxExpDateSearch.month - 1, maxExpDateSearch.day)
       companies = companies.filter((company: Company) => {
         company.expiration_date = new Date(company.expiration_date)
         return company.expiration_date >= date

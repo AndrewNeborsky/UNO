@@ -11,7 +11,13 @@ const userSchema = new Schema({
   background: { type: String },
   isBlock: {type: Boolean, default: false },
   access: { type: String, default: 'user' },
-  about: { type: String }
+  about: { type: String },
+  pay_history: [{
+    company_id: { type: String },
+    bonuce_name: { type: String },
+    amount: { type: Number },
+    pay_date: { type: Date }
+  }]
 });
  
 const User = mongoose.model('User', userSchema, 'users');

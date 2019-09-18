@@ -19,15 +19,18 @@ export class CompanyComponent implements OnInit {
 
   public company_id: string;
   public company: Company;
+  public user: User;
   public thisUser: User;
   public background: SafeStyle;
   public videoUrl: SafeResourceUrl;
+  public companyIsStopped: boolean;
 
   constructor(private activatedRoute: ActivatedRoute, private companyService: CompanyService, 
     private sanitizer: DomSanitizer, private auth: AuthService, private commentService: CommentService,
     private profileService: ProfileService) { 
     this.company_id = this.activatedRoute.snapshot.params.company_id
     this.company = new Company()
+    this.user = new User()
   }
 
   ngOnInit() {
@@ -36,7 +39,11 @@ export class CompanyComponent implements OnInit {
       this.background = this.sanitizer.bypassSecurityTrustStyle(
         `url(${this.company.images[0]?this.company.images[0]:'http://www.京大博士deの先生と勉強ネ.jp/assets/img/daniel-olahh.jpg'})`)
       this.videoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.company.video)
-      this.profileService.getUser(this.company.user_id).subscribe
+      this.profileService.getUser(this.company.user_id).subscribe(result => {
+        this.user = result
+      })
+      const dayToday = new Date()
+      this.companyIsStopped = dayToday > new Date(this.company.expiration_date)?true:false
     })
     this.auth.getThisUser().subscribe( res => {
       this.thisUser = res;

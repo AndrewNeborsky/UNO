@@ -27,7 +27,7 @@
             <div class="row">
                 <div class="col-md-6 ml-auto mr-auto text-center">
                     <button class="btn btn-outline-default btn-round" routerLink="change" *ngIf="checkAccess()">
-                        <i class="fa fa-edit"></i>
+                        <i class="fa fa-edit fa-lg"></i>
                         Change profile
                     </button>
                 </div>
@@ -35,19 +35,136 @@
             <br/>
             <ngb-tabset [justify]="'center'">
                 <ngb-tab title="Companies">
-                    <ng-template ngbTabContent >
+                    <ng-template ngbTabContent>
                         <div class="text-right mb-3" *ngIf="checkAccess()">
                             <div class="btn-group">
                                 <button class="btn btn-danger" routerLink="newcompany">Create</button>
-                                <button class="btn btn-danger">Delete</button>
+                                <button class="btn btn-danger" (click)="deleteCompanies()">Delete</button>
                             </div>
                         </div>
-                        <app-company-table [user_id]='user._id' [isHaveAcces]="checkAccess()"></app-company-table>
+                        <table *ngIf="companies" class="table table-striped" matSort (matSortChange)="sortCompany($event)">
+                            <thead>
+                            <tr>
+                                <th scope="col" *ngIf="checkAccess()">
+                                    <div class="form-check">
+                                        <label class="form-check-label align-top">
+                                            <input class="form-check-input" type="checkbox" (change)="checked=$event.target.checked">
+                                            <span class="form-check-sign"></span>
+                                        </label>
+                                    </div>
+                                </th>
+                                <th scope="col" mat-sort-header="name" (sort)="onSort($event)">Name</th>
+                                <th scope="col" mat-sort-header="goal" (sort)="onSort($event)">Goal</th>
+                                <th scope="col" mat-sort-header="presently" (sort)="onSort($event)">Presently</th>
+                                <th scope="col" mat-sort-header="expiration_date" (sort)="onSort($event)">Expiration date</th>
+                                <th scope="col" *ngIf="checkAccess()">Change</th>
+                            </tr>
+                            <tr>
+                                <th scope="col" *ngIf="checkAccess()"></th>
+                                <th scope="col">
+                                    <input class="form-control input-sm my-3" type="text" 
+                                        placeholder="Name" [(ngModel)]="nameSearch">
+                                </th>
+                                <th scope="col">
+                                    <input class="form-control input-sm mb-2" type="number" 
+                                        placeholder="Min" [(ngModel)]="minGoalSearch">
+                                    <input class="form-control input-sm" type="number" 
+                                        placeholder="Max" [(ngModel)]="maxGoalSearch">
+                                </th>
+                                <th scope="col">
+                                    <input class="form-control input-sm mb-2" type="number" 
+                                        placeholder="Min" [(ngModel)]="minPresentlySearch">
+                                    <input class="form-control input-sm" type="number" 
+                                        placeholder="Max" [(ngModel)]="maxPresentlySearch">
+                                </th>
+                                <th scope="col">
+                                    <div class="input-group mb-2">
+                                        <input class="form-control input-sm" placeholder="yyyy-mm-dd"
+                                            name="dp" [(ngModel)]="minExpDateSearch" ngbDatepicker #d="ngbDatepicker">
+                                        <div class="input-group-append">
+                                        <button class="btn btn-secondary input-sm" (click)="d.toggle()"
+                                            type="button"><i class="fa fa-calendar"></i></button>
+                                        </div>
+                                    </div>
+                                    <div class="input-group">
+                                        <input class="form-control input-sm" placeholder="yyyy-mm-dd"
+                                            name="dp" [(ngModel)]="maxExpDateSearch" ngbDatepicker #d="ngbDatepicker">
+                                        <div class="input-group-append">
+                                        <button class="btn btn-secondary input-sm" (click)="d.toggle()"
+                                            type="button"><i class="fa fa-calendar"></i></button>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th scope="col" *ngIf="checkAccess()"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let company of (sortedCompany | companyFilter: nameSearch: 
+                                minGoalSearch: maxGoalSearch: 
+                                minPresentlySearch: maxPresentlySearch: 
+                                minExpDateSearch: maxExpDateSearch)">
+                                <th scope="row" *ngIf="checkAccess()">
+                                    <div class="form-check">
+                                        <label class="form-check-label align-top">
+                                            <input class="form-check-input check" [value]="company._id" type="checkbox" [checked]="checked">
+                                            <span class="form-check-sign"></span>
+                                        </label>
+                                    </div>
+                                </th>
+                                <td scope="row"><a href="#" [routerLink] = "['/company', company._id]">{{company.name}}</a></td>
+                                <td scope="row">{{ company.goal | number }}</td>
+                                <td scope="row">{{ company.presently | number }}</td>
+                                <td scope="row">{{ company.expiration_date | date }}</td>
+                                <td scope="row" *ngIf="checkAccess()">
+                                    <a href="#" [routerLink]="['/company', company._id, 'change']" class="btn btn-outline-danger btn-sm input-sm">
+                                        <i class="fa fa-edit fa-lg"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </ng-template>
                 </ngb-tab>
                 <ngb-tab title="Pay history">
                     <ng-template ngbTabContent>
-                        Empty((
+                            <div class="row" *ngIf="checkAccess()">
+                                <input type="text" class="form-control mr-2 col" placeholder="Search bonuce name" [(ngModel)]="bonuceNameSearch">
+                                <div class="btn-group mb-2">
+                                    <button class="btn btn-danger" (click)="deleteHistory()">Delete</button>
+                                </div>
+                            </div>
+                            <table *ngIf="sortedHistory" class="table table-striped" matSort (matSortChange)="sortHistory($event)">
+                                <thead>
+                                <tr>
+                                    <th scope="col" *ngIf="checkAccess()">
+                                        <div class="form-check">
+                                            <label class="form-check-label align-top">
+                                                <input class="form-check-input" type="checkbox" (change)="checked=$event.target.checked">
+                                                <span class="form-check-sign"></span>
+                                            </label>
+                                        </div>
+                                    </th>
+                                    <th scope="col" mat-sort-header="bonuce_name" (sort)="onSort($event)">Bonuce name</th>
+                                    <th scope="col" mat-sort-header="amount" (sort)="onSort($event)">Amount</th>
+                                    <th scope="col" mat-sort-header="pay_date" (sort)="onSort($event)">Pay date</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let el of (sortedHistory | historyFilter: bonuceNameSearch); let i = index">
+                                    <th scope="row" *ngIf="checkAccess()">
+                                        <div class="form-check">
+                                            <label class="form-check-label align-top">
+                                                <input class="form-check-input check" [value]="el._id" type="checkbox" [checked]="checked">
+                                                <span class="form-check-sign"></span>
+                                            </label>
+                                        </div>
+                                    </th>
+                                    <td scope="row"><a href="#" [routerLink] = "['/company', el.company_id]">{{el.bonuce_name}}</a></td>
+                                    <td scope="row">{{ el.amount | number }}</td>
+                                    <td scope="row">{{ el.pay_date | date }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
                     </ng-template>
                 </ngb-tab>
             </ngb-tabset>

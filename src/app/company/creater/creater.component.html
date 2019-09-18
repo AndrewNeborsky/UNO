@@ -9,35 +9,47 @@
 </div><br/>
 
 <div class="container">
-    <div class="row col-md-5">
-        <div class="form-group mr-2">
-            <input type="text" class="form-control" [(ngModel)]="company.name" 
+    <form #companyForm="ngForm">
+    <div class="row">
+        <div class="form-group mr-2 col-md-5 col-sm-4">
+            <input type="text" class="form-control" #companyName="ngModel" [(ngModel)]="company.name" 
                 name="Company name" placeholder="Company name" required>
+            <div class="form-control-feedback text-danger" *ngIf="companyName.invalid">
+                This fild is requiered!
+            </div>
         </div>
         <ng-container *ngIf="user_id; else elseTemplate">
-            <button class="btn btn-danger form-group" (click)="createCompany()">Create</button>
+            <button class="btn btn-danger form-group" (click)="createCompany()" [disabled]="!companyForm.form.valid">Create</button>
         </ng-container>
         <ng-template #elseTemplate>
-            <button class="btn btn-danger form-group" (click)="changeCompany()">Change</button>
+            <button class="btn btn-danger form-group" (click)="changeCompany()" [disabled]="!companyForm.form.valid">Change</button>
         </ng-template>
-    </div>
+    </div><br/>
     <div class="form-row">
-        <div class="col-md-3">         
+        <div class="col-md-3 mb-2">         
             <div class="input-group" [ngClass]="{'input-group-focus': inputGoalFocus === true}">
                 <div class="input-group-prepend">
                     <span class="input-group-text">
                         <i class="fa fa-money" aria-hidden="true"></i>
                     </span>
                 </div>
-                <input type="number" class="form-control" placeholder="Company goal" [(ngModel)]="company.goal"
+                <input type="number" class="form-control" placeholder="Company goal" 
+                    #companyGoal="ngModel" [(ngModel)]="company.goal"
                     name="Company goal" (focus)="inputGoalFocus=true" (blur)="inputGoalFocus=false" required>
+                <div class="form-control-feedback text-danger" *ngIf="companyGoal.invalid">
+                    This fild is requiered!
+                </div>
             </div>
         </div>
         <div class="col-md-2">
             <div class="input-group" [ngClass]="{'input-group-focus': inputDataFocus === true}">
-                <input class="form-control" placeholder="Expiration date"
-                        name="dp" [(ngModel)]="modelDate" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()"
-                        name="Expiration date" (focus)="inputDataFocus=true" (blur)="inputDataFocus=false" required>
+                <input class="form-control" placeholder="Expiration date" #expirationDate="ngModel"
+                    [(ngModel)]="modelDate" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()"
+                    name="Expiration date" (focus)="inputDataFocus=true" (blur)="inputDataFocus=false" required>
+                
+                <div class="form-control-feedback text-danger" *ngIf="expirationDate.invalid">
+                    This fild is requiered!
+                </div>
                 <span class="input-group-append">
                     <span class="input-group-text"><i class="fa fa-calendar" aria-hidden="true"></i></span>
                 </span>
@@ -54,7 +66,7 @@
         [value]="company.video"  placeholder="YouTube video link" 
         (focus)="inputVideoFocus=true" (blur)="inputVideoFocus=false">
     </div><br/>
-    <div *ngIf="company.video">
+    <div *ngIf="company.video" class="thumb-wrap mx-auto">
         <iframe class="e2e-iframe-trusted-src" width="720" height="480" 
             [src]="videoUrl" frameborder="0" allowfullscreen></iframe>
     </div>
@@ -82,7 +94,7 @@
                 <ngb-tabset type="pills" class="nav-pills-danger">
                     <ngb-tab title="Text">
                         <ng-template ngbTabContent>
-                            <br/><textarea class="form-control" name="Story"
+                            <br/><textarea class="form-control" name="Story" placeholder="This fild write about your company (this fild is requiered)"
                                 rows="15" [(ngModel)]="company.story" required></textarea>
                         </ng-template>
                     </ngb-tab>
@@ -165,4 +177,5 @@
             </ng-template>
         </ngb-tab>
     </ngb-tabset>
+</form>
 </div>

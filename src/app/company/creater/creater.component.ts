@@ -6,9 +6,8 @@ import { Company } from '../../models/company.model'
 import { ActivatedRoute, Router } from '@angular/router';
 import { Bonuce } from 'src/app/models/bonuce.model';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
-import * as $ from 'jquery';
-import { ToastrService } from 'ngx-toastr';
 import { News } from 'src/app/models/news.model';
+import { InfoService } from 'src/app/services/info.service';
 
 @Component({
   selector: 'app-creater',
@@ -28,7 +27,7 @@ export class CreaterComponent implements OnInit {
   public hasBaseDropZoneOver: boolean = false;
 
   constructor(private companyService: CompanyService, private sanitizer: DomSanitizer, 
-    private activatedRoute: ActivatedRoute, private router: Router, private toastr: ToastrService) {
+    private activatedRoute: ActivatedRoute, private router: Router, private infoService: InfoService) {
     this.company = new Company();
     this.newsWindow = new News();
   }
@@ -87,44 +86,31 @@ export class CreaterComponent implements OnInit {
   public fileOverBase(e:any):void {
     this.hasBaseDropZoneOver = e;
   }
-  
-  // checkForm() {
-  //   let requiredFields = $("[required]"), isEmpty: boolean = false
-  //   requiredFields.each((index: number) => {
-  //     if (!requiredFields[index].value){
-  //       this.toastr.error(
-  //         `<span data-notify="message">${requiredFields[index].name} is required</span>`,
-  //         "",
-  //         {
-  //           timeOut: 4000,
-  //           closeButton: true,
-  //           enableHtml: true,
-  //           toastClass: "alert alert-danger",
-  //           positionClass: "toast-top-center"
-  //         }
-  //       )
-  //       isEmpty = true
-  //     }
-  //   })
-  //   return isEmpty
-  // }
 
-  createCompany() {
+  preparationForSend() {
     this.company.expiration_date = new Date(this.modelDate.year, this.modelDate.month, this.modelDate.day)
     this.company.update_date = new Date()
     this.company.goal = Math.abs(this.company.goal)
+  }
+
+  errorControl(status: number) {
+    if (status === 403) {
+      this.infoService.showAlert('You do not have access to perform this action')
+    }
+  }
+
+  createCompany() {
+    this.preparationForSend()
     this.companyService.createCompany(this.company).subscribe(res => {
       this.router.navigate(['/company', res._id])
-    })
+    }, err => this.errorControl(err['status']))
   }
 
   changeCompany() {
-    this.company.expiration_date = new Date(this.modelDate.year, this.modelDate.month - 1, this.modelDate.day)
-    this.company.update_date = new Date()
-    this.company.goal = Math.abs(this.company.goal)
+    this.preparationForSend()
     this.companyService.changeCompany(this.company).subscribe(res => {
       this.router.navigate(['/company', this.company._id])
-    })
+    }, err => this.errorControl(err['status']))
   }
 
   deleteImage(image: string) {

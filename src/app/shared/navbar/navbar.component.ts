@@ -2,6 +2,8 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
+import { Company } from 'src/app/models/company.model';
+import { User } from 'src/app/models/user.model';
 
 @Component({
     selector: 'app-navbar',
@@ -13,6 +15,8 @@ export class NavbarComponent implements OnInit {
     private toggleButton: any;
     private sidebarVisible: boolean;
     private user_id: string;
+    public companies: Company[]
+    public thisUser: User;
 
     constructor(public location: Location, private element : ElementRef, private auth: AuthService, private router: Router) {
         this.sidebarVisible = false;
@@ -73,8 +77,8 @@ export class NavbarComponent implements OnInit {
 
     getProfile() {
         this.auth.getThisUser().subscribe(res => {
-            this.user_id = res._id
-            this.router.navigate(['/profile', this.user_id])
+            this.thisUser = res
+            this.router.navigate(['/profile', this.thisUser._id])
         })
     }
 }

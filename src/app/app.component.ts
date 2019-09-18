@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
   removeFooter() {
     var titlee = this.location.prepareExternalUrl(this.location.path());
     titlee = titlee.slice( 1 );
-    if(titlee === 'auth'){
+    if(titlee === 'auth' || titlee === 'search' || titlee === 'admin'){
         return false;
     }
     else {

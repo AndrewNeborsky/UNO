@@ -11,30 +11,68 @@ verifyToken = require('../functions/vetifyTocken')
 
 router.post('/create', verifyToken, (req, res) => {
     let company = new Company(req.body)
-    company.save((err, company) => {
-        if(err){
-            console.error('error:' + err)
-        } else {  
-            res.status(200).send(company)
-        }
-    })
+    if(req.user.access === 'admin' || req.user._id == company.user_id) {
+        company.save((err, company) => {
+            if(err){
+                console.error('error:' + err)
+            } else {  
+                res.status(200).send(company)
+            }
+        })
+    } else {
+        res.sendStatus(403)
+    }
 })
 
 router.post('/change', verifyToken, (req, res) => {
     let company = req.body
-    Company.findByIdAndUpdate(company._id, company, (err, company) => {
+    if(req.user.access === 'admin' || req.user._id == company.user_id) {
+        Company.findByIdAndUpdate(company._id, company, (err, company) => {
+            if(err){
+                console.error('error:' + err)
+            } else {  
+                res.status(200).send()
+            }
+        })
+    } else {
+        res.sendStatus(403)
+    }
+})
+
+
+router.get('/search/:searchString', (req, res) => {
+    Company.find({$text: {$search: req.params.searchString}}).exec((err, companies) => {
+        res.status(200).send(companies)
+    })
+})
+
+router.get('/last_update', (req, res) => {
+    Company.find().sort({update_date: -1}).limit(10).exec((err, companies) => {
         if(err){
             console.error('error:' + err)
         } else {  
-            res.status(200).send()
+            res.status(200).send(companies)
         }
     })
 })
 
+router.post('/delete_user_companies', (req, res) => {
+    Company.deleteMany({user_id: req.body.id},(err, result) => {
+        if(err){
+            console.error('error:' + err)
+        } else { 
+            res.sendStatus(204)
+        }
+    })
+})
 
-router.post('/search', (req, res) => {
-    Company.find({$text: {$search: req.body.searhString}}).exec((err, companies) => {
-        res.status(200).send(companies)
+router.post('/delete', (req, res) => {
+    Company.findByIdAndDelete(req.body.id,(err, result) => {
+        if(err){
+            console.error('error:' + err)
+        } else {  
+            res.sendStatus(204)
+        }
     })
 })
 
@@ -86,7 +124,7 @@ router.post('/set_support', verifyToken, (req, res) => {
         } else {
             company.presently += +req.body.amount
             company.save()
-            res.status(200).send()
+            res.sendStatus(204)
         }
     })
 })

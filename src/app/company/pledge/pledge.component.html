@@ -17,7 +17,7 @@
             <p class="card-text">Make a pledge without bonuces</p><br/>
             <form class="d-flex" (submit)="setSupport(amount)">
                 <div class="col-md-3">
-                    <input type="number" class="form-control" min="1" value="1" #amount>
+                    <input type="number" name="For Thanks" class="form-control" min="1" value="1" #amount>
                 </div>
                 <button type="submit" class="btn btn-danger">Pay</button>
             </form>
@@ -32,7 +32,7 @@
             <p class="card-text">{{bonuce.about}}</p><br/>
             <form class="d-flex" (submit)="setSupport(amount)">
                 <div class="col-md-3">
-                    <input type="number" class="form-control" [min]="bonuce.price" [value]="bonuce.price" #amount>
+                    <input type="number" class="form-control" [name]="bonuce.name" [min]="bonuce.price" [value]="bonuce.price" #amount>
                 </div>
                 <button type="submit" class="btn btn-danger">Pay</button>
             </form>

@@ -1,0 +1,63 @@
+<div class="page-header page-header-xs" data-parallax="true" style="background-image: url('https://thequestion.s3.eu-central-1.amazonaws.com/393/739915-81f1763e.jpeg')">
+    <div class="filter"></div>
+    <div class="container">
+        <div class="motto text-center">
+            <h1>One Panel to rule them all,<br/>
+                One Panel to find them...</h1>
+        </div>
+    </div>
+</div><br/><br/>
+<div class="container">
+    <div class="row">
+        <input type="text" class="form-control mr-2 col" placeholder="Search name" [(ngModel)]="nameSearch">
+        <input type="text" class="form-control mr-2 col" placeholder="Search email" [(ngModel)]="emailSearch">
+        <div class="btn-group mb-2">
+            <button class="btn btn-danger" (click)="deleteUsers()">Delete</button>
+            <button class="btn btn-danger" (click)="blockUsers()">Block</button>
+            <button class="btn btn-danger" (click)="unlockUsers()">Unlock</button>
+            <button class="btn btn-danger" (click)="toggleAccessUsers()">Toggle access</button>
+        </div>
+    </div>
+    <table *ngIf="users" class="table table-striped" matSort (matSortChange)="sortUsers($event)">
+        <thead>
+        <tr>
+            <th scope="col" >
+                <div class="form-check">
+                    <label class="form-check-label align-top">
+                        <input class="form-check-input" type="checkbox" (change)="checked=$event.target.checked">
+                        <span class="form-check-sign"></span>
+                    </label>
+                </div>
+            </th>
+            <th scope="col" mat-sort-header="name" (sort)="onSort($event)">Name</th>
+            <th scope="col" mat-sort-header="email" (sort)="onSort($event)">Email</th>
+            <th scope="col" mat-sort-header="access" (sort)="onSort($event)">Access</th>
+            <th scope="col" mat-sort-header="provider" (sort)="onSort($event)">Provider</th>
+            <th scope="col" mat-sort-header="isBlock" (sort)="onSort($event)">isBlock</th>
+            <th scope="col" >Change</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let user of (sortedUsers | usersFilter: nameSearch: emailSearch); trackBy: trackByUsers">
+            <th scope="row">
+                <div class="form-check">
+                    <label class="form-check-label align-top">
+                        <input class="form-check-input check" [value]="user._id" type="checkbox" [checked]="checked">
+                        <span class="form-check-sign"></span>
+                    </label>
+                </div>
+            </th>
+            <td scope="row"><a href="#" [routerLink] = "['/profile', user._id]">{{user.name}}</a></td>
+            <td scope="row">{{ user.email }}</td>
+            <td scope="row">{{ user.access }}</td>
+            <td scope="row">{{ user.provider }}</td>
+            <td scope="row">{{ user.isBlock }}</td>
+            <td scope="row">
+                <a href="#" [routerLink]="['/profile', user._id, 'change']" class="btn btn-outline-danger btn-sm input-sm">
+                    <i class="fa fa-edit"></i>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,32 +1,52 @@
 <div class="modal fade" id="newsWindow" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">{{newsWindow.title}}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-                <div class="modal-body">
-                    <p><img *ngIf="newsWindow.image" [src]="newsWindow.image" class="rounded w-100"></p><br/>
-                    <markdown [data]="newsWindow.text"></markdown>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger m-3" data-dismiss="modal">Close</button>
-                </div>
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">{{newsWindow.title}}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <p><img *ngIf="newsWindow.image" [src]="newsWindow.image" class="rounded w-100"></p><br/>
+                <markdown [data]="newsWindow.text"></markdown>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger m-3" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
-    <div class="d-flex flex-column-reverse">
-        <div class="card" *ngFor="let el of news">
-            <div class="card-header d-flex">
-                <h2 class="mr-auto">{{el.title}}</h2>
-                <p>{{el.create_date | date}}</p>
-            </div>
-            <div class="card-body">
-            <p class="card-text">
-                <markdown [data]="(el.text | slice:0:200) + '....'"></markdown>
-            </p>
+</div>
+<div class="d-flex col-md-5 ml-auto">
+    <div class="mr-2 p-1">From: </div>
+    <div class="input-group mr-2">
+        <input class="form-control input-sm" placeholder="yyyy-mm-dd"
+            name="from" [(ngModel)]="fromSearch" ngbDatepicker #from="ngbDatepicker">
+        <div class="input-group-append">
+        <button class="btn btn-danger input-sm" (click)="from.toggle()"
+            type="button"><i class="fa fa-calendar"></i></button>
+        </div>
+    </div>
+    <div class="mr-2 p-1">to: </div>
+    <div class="input-group">
+        <input class="form-control input-sm" placeholder="yyyy-mm-dd"
+            name="to" [(ngModel)]="toSearch" ngbDatepicker #to="ngbDatepicker">
+        <div class="input-group-append">
+        <button class="btn btn-danger input-sm" (click)="to.toggle()"
+            type="button"><i class="fa fa-calendar"></i></button>
+        </div>
+    </div>
+</div><br/>
+<div class="d-flex flex-column-reverse">
+    <div class="card" *ngFor="let el of (news | newsFilter: fromSearch: toSearch)">
+        <div class="card-header d-flex">
+            <h2 class="mr-auto">{{el.title}}</h2>
+            <p>{{el.create_date | date}}</p>
+        </div>
+        <div class="card-body">
+        <p class="card-text">
+            <markdown [data]="(el.text | slice:0:200) + '....'"></markdown>
+        </p>
         </div>
         <div class="card-footer text-muted">
             <button class="btn btn-danger btn-lg" data-toggle="modal" 

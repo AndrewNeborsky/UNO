@@ -1,7 +1,7 @@
 <form (submit)="addNews(newsForm)" #newsForm="ngForm" *ngIf="isAdd">
     <div class="row">
         <div class="col-md-8">
-            <input type="text" class="form-control" name="title" placeholder="Title"[(ngModel)]="news.title" required>
+            <input type="text" class="form-control" name="title" placeholder="Title" [(ngModel)]="news.title" autofocus required>
         </div>
         <button type="submit" class="btn btn-danger form-group" [disabled]="!newsForm.form.valid">Add</button>
     </div>

@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CompanyService } from '../services/company.service';
+import { Company } from '../models/company.model';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-home',
@@ -8,10 +11,18 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
-  events = []
+  public companies: Company[]
 
-  constructor(private router: Router) { }
+  constructor(private companyService: CompanyService, private sanitizer: DomSanitizer) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.companyService.getLastUpdateCompanies().subscribe(res => {
+      this.companies = res
+    })
+  }
+
+  getBackground(image: string) {
+    return image?image:'http://www.京大博士deの先生と勉強ネ.jp/assets/img/daniel-olahh.jpg'
+  }
 
 }

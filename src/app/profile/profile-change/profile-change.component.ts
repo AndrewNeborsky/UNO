@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProfileService } from 'src/app/services/profile.service';
 import { FileUploader, FileUploaderOptions, FileItem } from 'ng2-file-upload';
 import { CompanyService } from 'src/app/services/company.service';
-import { ToastrService } from 'ngx-toastr';
+import { InfoService } from 'src/app/services/info.service';
 
 @Component({
   selector: 'app-profile-change',
@@ -24,7 +24,7 @@ export class ProfileChangeComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute, private profileService: ProfileService,
     private sanitizer: DomSanitizer, private router: Router, private companyService: CompanyService,
-    private toastr: ToastrService) { 
+    private infoService: InfoService) { 
     this.user = new User()
     this.id = this.activatedRoute.snapshot.params.id
    }
@@ -34,11 +34,6 @@ export class ProfileChangeComponent implements OnInit {
       this.user = res
       this.background = this.sanitizer.bypassSecurityTrustStyle(
         `url(${this.user.background?this.user.background:'https://demos.creative-tim.com/paper-kit-2-pro/assets/img/sections/fabio-mangione.jpg'})`);
-    // },
-    // err => {
-    //   if (err instanceof HttpErrorResponse && err.status === 401) {
-    //     this.router.navigate(['/auth'])
-    //   }
     })
 
     const uploaderOptions: FileUploaderOptions = {
@@ -88,20 +83,6 @@ export class ProfileChangeComponent implements OnInit {
   }
 
   changeProfile() {
-    if(!this.user.name || !this.user.email) {
-      this.toastr.error(
-        '<span data-notify="message">Fields with name and email must be filled</span>',
-        "",
-        {
-          timeOut: 4000,
-          closeButton: true,
-          enableHtml: true,
-          toastClass: "alert alert-danger",
-          positionClass: "toast-top-center"
-        }
-      )
-      return false
-    }
     this.profileService.changeProfile(this.user).subscribe(
       res => this.router.navigate(['/profile', res._id])
     )

@@ -11,13 +11,49 @@
         <div class="navbar-collapse" id="navbarToggler">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" *ngIf="checkLogin() && !checkPath('auth '+ user_id)" (click)="getProfile()"><i class="nc-icon nc-single-02"></i> Profile</a>
+                    <a class="nav-link" *ngIf="checkLogin() && !checkPath('auth '+ user_id)" (click)="sidebarClose()" (click)="getProfile()">
+                        <i class="nc-icon nc-single-02"></i>
+                        Profile
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" *ngIf="!checkPath('auth') && checkLogin()" title="Admin panel" (click)="sidebarClose()" routerLink="/admin">
+                        <i class="nc-icon nc-atom" aria-hidden="true"></i>
+                        <p class="d-lg-none">Admin panel</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" *ngIf="!checkPath('auth')" title="Search" (click)="sidebarClose()" routerLink="/search">
+                        <i class="nc-icon nc-zoom-split" aria-hidden="true"></i>
+                        <p class="d-lg-none">Serch</p>
+                    </a>
                 </li>
                 <li class="nav-item" *ngIf="!checkPath('auth')">
-                    <a href="#" class="btn btn-danger btn-round" *ngIf="!checkLogin()" routerLink="/auth" >Log in</a>
-                    <a href="#" class="btn btn-danger btn-round" *ngIf="checkLogin()" (click)="logout()" routerLink="/auth">Log out</a>
+                    <button class="btn btn-danger btn-round" *ngIf="!checkLogin()" routerLink="/auth" >Log in</button>
+                    <button class="btn btn-danger btn-round" *ngIf="checkLogin()" (click)="logout()">Log out</button>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
+<div class="modal fade" id="serchWindow" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" 
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <input class="form-control searchCompanies" placeholder="Search">
+            </div>
+            <div class="modal-body col">
+                <div *ngFor="let company of companies" class="mb-1" [routerLink]="['/company', company._id]" data-dismiss="modal">
+                    <div class="border p-2 rounded d-flex">
+                        <div class="mr-auto">{{company.name}}</div>
+                        <div>Epiration date: {{company.expiration_date | date}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger m-3" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

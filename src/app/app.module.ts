@@ -7,7 +7,6 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { CookieService } from 'ngx-cookie-service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatSortModule} from '@angular/material/sort';
-import {MatPaginatorModule} from '@angular/material/paginator';
 import { MarkdownModule } from 'ngx-markdown';
 import { FileUploadModule } from 'ng2-file-upload';
 import { ToastrModule } from 'ngx-toastr';
@@ -32,7 +31,11 @@ import { BonuceComponent } from './company/creater/bonuce-creater/bonuce-creater
 import { NewsCreaterComponent } from './company/creater/news-creater/news-creater.component';
 import { NewsComponent } from './company/news/news.component';
 import { CommentsComponent } from './company/comments/comments.component';
-import { CompanyTableComponent } from './profile/company-table/company-table.component';
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import { UsersFilterPipe } from './pipes/users-filter.pipe';
+import { SearchComponent } from './search/search.component';
+import { NewsFilterPipe } from './pipes/news-filter.pipe';
+import { HistoryFilterPipe } from './pipes/history-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -53,7 +56,11 @@ import { CompanyTableComponent } from './profile/company-table/company-table.com
     NewsCreaterComponent,
     NewsComponent,
     CommentsComponent,
-    CompanyTableComponent
+    AdminPanelComponent,
+    UsersFilterPipe,
+    SearchComponent,
+    NewsFilterPipe,
+    HistoryFilterPipe
   ],
   imports: [
     BrowserModule,
@@ -63,7 +70,6 @@ import { CompanyTableComponent } from './profile/company-table/company-table.com
     NgbModule,
     BrowserAnimationsModule,
     MatSortModule,
-    MatPaginatorModule,
     MarkdownModule.forRoot(),
     FileUploadModule,
     ToastrModule.forRoot(),

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { InfoService } from '../services/info.service';
 
 @Component({
   selector: 'app-auth',
@@ -12,7 +12,8 @@ export class AuthComponent implements OnInit {
 
   public id: Number;
 
-  constructor(private auth: AuthService, private router: Router, private activatedRoute: ActivatedRoute, private toastr: ToastrService) { 
+  constructor(private auth: AuthService, private router: Router, private activatedRoute: ActivatedRoute,
+    private infoService: InfoService) { 
     this.activatedRoute.queryParams.subscribe(params => {
       this.id = params['id']
     })
@@ -28,16 +29,6 @@ export class AuthComponent implements OnInit {
   }
 
   openAlert(text: string){
-    this.toastr.error(
-      `<span data-notify="message">${text}</span>`,
-        "",
-        {
-          timeOut: 4000,
-          closeButton: true,
-          enableHtml: true,
-          toastClass: "alert alert-danger",
-          positionClass: "toast-top-center"
-        }
-      );
+    this.infoService.showAlert(text)
   }
 }

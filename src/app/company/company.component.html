@@ -5,15 +5,21 @@
             <div class="motto text-center">
                 <h1>{{company.name}}</h1>
                 <h3>Expiration date: <i>{{company.expiration_date | date}}</i></h3><br/>
-                <p><ngb-progressbar type="danger" value="{{company.presently / company.goal * 100}}" [striped]="true" [animated]="true" [height]="'25px'">
-                    <i>{{company.presently}}/<b><b>{{company.goal}}</b></b> ({{company.presently / company.goal * 100 | number: '.0-2'}} %)</i>
+                <p><ngb-progressbar type="danger" value="{{company.presently / company.goal * 100}}" 
+                    [striped]="true" [animated]="true" [height]="'25px'">
+                    <i>
+                        {{company.presently}}/<b><b>{{company.goal}}</b></b> 
+                        ({{company.presently / company.goal * 100 | number: '.0-2'}} %)
+                    </i>
                 </ngb-progressbar></p><br/>
-                <button class="btn btn-outline-danger btn-round" routerLink="pledge">Support this project</button>
+                <button *ngIf="!companyIsStopped" class="btn btn-outline-danger btn-round" routerLink="pledge">Support this project</button>
             </div>
         </div>
     </div><br>
     <div class="container">
-        <div class="row">
+        <div>Createt by <a [routerLink]="['/profile', user._id]">{{user.name}}</a></div>
+        <br/>
+        <div class="row" *ngIf="company.video || company.images[0]">
             <div class="col-8 mx-auto">
                 <div class="card page-carousel">
                     <ngb-carousel>

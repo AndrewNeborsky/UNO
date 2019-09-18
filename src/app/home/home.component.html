@@ -1,13 +1,11 @@
+
 <div class="page-header section-dark" 
     style="background-image: url(https://www.trampaway.com/uploaded/images/trip/2017-04/9a5299c1-283b-11e7-9be0-7054d27b717f/58ffac3e833f8.jpg)">
     <div class="filter"></div>
     <div class="content-center">
         <div class="container">
             <div class="title-brand">
-                <div class="angular-logo">
-                    <img src="assets/img/angular2-logo.png" alt="">
-                </div>
-                <h1 class="presentation-title">UNO</h1>
+                <h1 class="presentation-title"><b>UNO</b></h1>
                 <div class="fog-low">
                     <img src="assets/img/fog-low.png" alt="">
                 </div>
@@ -15,25 +13,32 @@
                     <img src="assets/img/fog-low.png" alt="">
                 </div>
             </div>
+
+            <h2 class="presentation-subtitle text-center">Strong and memorable tagline!</h2>
         </div>
     </div>
     <div class="moving-clouds" style="background-image: url('assets/img/clouds.png'); "></div>
 </div>
-
 <div class="container">
-    <div class="row mt-5">
-        <div class="col-md-4 mb-3" *ngFor="let event of events">
-        <div class="card text-center">
-            <div class="card-body">
-            <h5 class="card-title">{{event.name}}</h5>
-            <p class="card-text">{{event.description}}</p>
-            <a href="#" class="btn btn-primary">Buy Tickets</a>
-            </div>
-            <div class="card-footer text-muted">
-            {{event.date | date:'shortDate'}}
-            </div>
-        </div>
-        </div>
+    <div class="tim-title">
+        <h2>Last created and updated companies:</h2>
     </div>
+    <ngb-carousel [showNavigationArrows]="false">
+        <ng-template ngbSlide *ngFor="let company of companies">
+            <div class="page-header page-header-xs rounded-lg" data-parallax="true" [style.background-image]="sanitizer.bypassSecurityTrustStyle(
+                'url('+getBackground(company.images[0])+')')">
+                <div class="filter"></div>
+                <div class="container">
+                    <div class="motto text-center">
+                        <h1>{{company.name}}</h1>
+                        <h3>Expiration date: <i>{{company.expiration_date | date}}</i></h3><br/>
+                        <p><ngb-progressbar type="danger" value="{{company.presently / company.goal * 100}}" [striped]="true" [animated]="true" [height]="'25px'">
+                            <i>{{company.presently}}/<b><b>{{company.goal}}</b></b> ({{company.presently / company.goal * 100 | number: '.0-2'}} %)</i>
+                        </ngb-progressbar></p><br/>
+                        <button class="btn btn-outline-danger btn-round" [routerLink]="['/company', company._id]">More details</button>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </ngb-carousel>
 </div>
-  
