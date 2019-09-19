@@ -37,14 +37,14 @@ export class CompanyFilterPipe implements PipeTransform {
       let date = new Date(minExpDateSearch.year, minExpDateSearch.month - 1, minExpDateSearch.day)
       companies = companies.filter((company: Company) => {
         company.expiration_date = new Date(company.expiration_date)
-        return company.expiration_date <= date
+        return company.expiration_date >= date
       })
     }
     if(maxExpDateSearch) {
       let date = new Date(maxExpDateSearch.year, maxExpDateSearch.month - 1, maxExpDateSearch.day)
       companies = companies.filter((company: Company) => {
         company.expiration_date = new Date(company.expiration_date)
-        return company.expiration_date >= date
+        return company.expiration_date <= date
       })
     }
     return companies

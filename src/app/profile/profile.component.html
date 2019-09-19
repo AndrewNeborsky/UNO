@@ -80,17 +80,17 @@
                                 <th scope="col">
                                     <div class="input-group mb-2">
                                         <input class="form-control input-sm" placeholder="yyyy-mm-dd"
-                                            name="dp" [(ngModel)]="minExpDateSearch" ngbDatepicker #d="ngbDatepicker">
+                                            name="minExpDate" [(ngModel)]="minExpDateSearch" ngbDatepicker #minExpDate="ngbDatepicker">
                                         <div class="input-group-append">
-                                        <button class="btn btn-secondary input-sm" (click)="d.toggle()"
+                                        <button class="btn btn-secondary input-sm" (click)="minExpDate.toggle()"
                                             type="button"><i class="fa fa-calendar"></i></button>
                                         </div>
                                     </div>
                                     <div class="input-group">
                                         <input class="form-control input-sm" placeholder="yyyy-mm-dd"
-                                            name="dp" [(ngModel)]="maxExpDateSearch" ngbDatepicker #d="ngbDatepicker">
+                                            name="maxExpDate" [(ngModel)]="maxExpDateSearch" ngbDatepicker #maxExpDate="ngbDatepicker">
                                         <div class="input-group-append">
-                                        <button class="btn btn-secondary input-sm" (click)="d.toggle()"
+                                        <button class="btn btn-secondary input-sm" (click)="maxExpDate.toggle()"
                                             type="button"><i class="fa fa-calendar"></i></button>
                                         </div>
                                     </div>
