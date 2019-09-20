@@ -21,11 +21,9 @@ export class CommentsComponent implements OnInit {
    }
 
   ngOnInit() {
-    if(this.user){
-      this.comment.user_id = this.user._id
-      this.comment.user_name = this.user.name
-      this.comment.profile_img = this.user.profile_img
-    }
+    this.comment.user_id = this.user._id
+    this.comment.user_name = this.user.name
+    this.comment.profile_img = this.user.profile_img
   }
 
   sendComment() {

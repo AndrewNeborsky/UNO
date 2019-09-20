@@ -127,10 +127,10 @@
                 </ngb-tab>
                 <ngb-tab title="Pay history">
                     <ng-template ngbTabContent>
-                            <div class="row" *ngIf="checkAccess()">
+                            <div class="row">
                                 <input type="text" class="form-control mr-2 col" placeholder="Search bonuce name" [(ngModel)]="bonuceNameSearch">
                                 <div class="btn-group mb-2">
-                                    <button class="btn btn-danger" (click)="deleteHistory()">Delete</button>
+                                    <button class="btn btn-danger" *ngIf="checkAccess()" (click)="deleteHistory()">Delete</button>
                                 </div>
                             </div>
                             <table *ngIf="sortedHistory" class="table table-striped" matSort (matSortChange)="sortHistory($event)">

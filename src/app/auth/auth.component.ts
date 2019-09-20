@@ -20,12 +20,10 @@ export class AuthComponent implements OnInit {
   }
 
   ngOnInit() {
-    if(this.id){
-      this.auth.socialLogin(this.id).subscribe(res => {
-        localStorage.setItem('token', res['token'])
-        this.router.navigate(['/'])
-      })
-    }
+    this.auth.socialLogin(this.id).subscribe(res => {
+      localStorage.setItem('token', res['token'])
+      this.router.navigate(['/'])
+    })
   }
 
   openAlert(text: string){
