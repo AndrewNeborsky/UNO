@@ -25,6 +25,16 @@ export class ProfileComponent implements OnInit {
   public companies: Company[];
   sortedCompany: Company[];
   sortedHistory: PayHistory[];
+  checkedCompany: boolean;
+  checkedHistory: boolean;
+  nameSearch: string;
+  minGoalSearch: number;
+  maxGoalSearch: number;
+  minPresentlySearch: number;
+  maxPresentlySearch: number;
+  minExpDateSearch: NgbDate;
+  maxExpDateSearch: NgbDate;
+  bonuceNameSearch: string;
 
   constructor(private activatedRoute: ActivatedRoute, private profileService: ProfileService, 
     private sanitizer: DomSanitizer, private router: Router, private companyService: CompanyService, 

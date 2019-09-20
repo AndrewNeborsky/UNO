@@ -26,6 +26,10 @@ export class CreaterComponent implements OnInit {
   public uploader: FileUploader;
   public hasBaseDropZoneOver: boolean = false;
 
+  inputGoalFocus: boolean;
+  inputDataFocus: boolean;
+  inputVideoFocus: boolean;
+
   constructor(private companyService: CompanyService, private sanitizer: DomSanitizer, 
     private activatedRoute: ActivatedRoute, private router: Router, private infoService: InfoService) {
     this.company = new Company();

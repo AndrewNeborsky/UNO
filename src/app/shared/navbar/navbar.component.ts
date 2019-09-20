@@ -14,7 +14,7 @@ export class NavbarComponent implements OnInit {
 
     private toggleButton: any;
     private sidebarVisible: boolean;
-    private user_id: string;
+    public user_id: string;
     public companies: Company[]
     public thisUser: User;
 

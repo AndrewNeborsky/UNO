@@ -13,7 +13,7 @@ export class HomeComponent implements OnInit {
 
   public companies: Company[]
 
-  constructor(private companyService: CompanyService, private sanitizer: DomSanitizer) { }
+  constructor(private companyService: CompanyService, public sanitizer: DomSanitizer) { }
 
   ngOnInit() {
     this.companyService.getLastUpdateCompanies().subscribe(res => {

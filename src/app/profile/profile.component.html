@@ -48,15 +48,15 @@
                                 <th scope="col" *ngIf="checkAccess()">
                                     <div class="form-check">
                                         <label class="form-check-label align-top">
-                                            <input class="form-check-input" type="checkbox" (change)="checked=$event.target.checked">
+                                            <input class="form-check-input" type="checkbox" (change)="checkedCompany=$event.target.checked" [checked]="checkedCompany">
                                             <span class="form-check-sign"></span>
                                         </label>
                                     </div>
                                 </th>
-                                <th scope="col" mat-sort-header="name" (sort)="onSort($event)">Name</th>
-                                <th scope="col" mat-sort-header="goal" (sort)="onSort($event)">Goal</th>
-                                <th scope="col" mat-sort-header="presently" (sort)="onSort($event)">Presently</th>
-                                <th scope="col" mat-sort-header="expiration_date" (sort)="onSort($event)">Expiration date</th>
+                                <th scope="col" mat-sort-header="name">Name</th>
+                                <th scope="col" mat-sort-header="goal">Goal</th>
+                                <th scope="col" mat-sort-header="presently">Presently</th>
+                                <th scope="col" mat-sort-header="expiration_date">Expiration date</th>
                                 <th scope="col" *ngIf="checkAccess()">Change</th>
                             </tr>
                             <tr>
@@ -106,7 +106,7 @@
                                 <th scope="row" *ngIf="checkAccess()">
                                     <div class="form-check">
                                         <label class="form-check-label align-top">
-                                            <input class="form-check-input check" [value]="company._id" type="checkbox" [checked]="checked">
+                                            <input class="form-check-input check" [value]="company._id" type="checkbox" [checked]="checkedCompany">
                                             <span class="form-check-sign"></span>
                                         </label>
                                     </div>
@@ -139,14 +139,14 @@
                                     <th scope="col" *ngIf="checkAccess()">
                                         <div class="form-check">
                                             <label class="form-check-label align-top">
-                                                <input class="form-check-input" type="checkbox" (change)="checked=$event.target.checked">
+                                                <input class="form-check-input" type="checkbox" (change)="checkedHistory=$event.target.checked" [checked]="checkedHistory">
                                                 <span class="form-check-sign"></span>
                                             </label>
                                         </div>
                                     </th>
-                                    <th scope="col" mat-sort-header="bonuce_name" (sort)="onSort($event)">Bonuce name</th>
-                                    <th scope="col" mat-sort-header="amount" (sort)="onSort($event)">Amount</th>
-                                    <th scope="col" mat-sort-header="pay_date" (sort)="onSort($event)">Pay date</th>
+                                    <th scope="col" mat-sort-header="bonuce_name">Bonuce name</th>
+                                    <th scope="col" mat-sort-header="amount">Amount</th>
+                                    <th scope="col" mat-sort-header="pay_date">Pay date</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -154,7 +154,7 @@
                                     <th scope="row" *ngIf="checkAccess()">
                                         <div class="form-check">
                                             <label class="form-check-label align-top">
-                                                <input class="form-check-input check" [value]="el._id" type="checkbox" [checked]="checked">
+                                                <input class="form-check-input check" [value]="el._id" type="checkbox" [checked]="checkedHistory">
                                                 <span class="form-check-sign"></span>
                                             </label>
                                         </div>

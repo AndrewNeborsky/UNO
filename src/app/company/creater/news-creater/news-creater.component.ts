@@ -13,8 +13,7 @@ export class NewsCreaterComponent implements OnInit {
   public news: News;
   public imageUploader: FileUploader;
   public isAdd: boolean
-
-  private hasBaseDropZoneOver: boolean
+  public hasBaseDropZoneOver: boolean
 
   constructor(private companyService: CompanyService) {
     this.news = new News();

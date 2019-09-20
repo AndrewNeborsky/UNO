@@ -17,9 +17,12 @@ import { InfoService } from '../services/info.service';
 export class AdminPanelComponent implements OnInit {
 
   public thisUser: User;
-
-  private users: User[];
+  public users: User[];
+  
   sortedUsers: User[];
+  checked: boolean;
+  nameSearch: string;
+  emailSearch: string;
 
   trackByUsers(index: number, user: User): number {
     return +user._id

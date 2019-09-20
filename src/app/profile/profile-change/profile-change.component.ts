@@ -22,6 +22,9 @@ export class ProfileChangeComponent implements OnInit {
   public avatarUploader: FileUploader;
   public hasBaseDropZoneOver: boolean = false;
 
+  inputNameFocus: boolean;
+  inputEmailFocus: boolean;
+
   constructor(private activatedRoute: ActivatedRoute, private profileService: ProfileService,
     private sanitizer: DomSanitizer, private router: Router, private companyService: CompanyService,
     private infoService: InfoService) { 

@@ -24,16 +24,16 @@
             <th scope="col" >
                 <div class="form-check">
                     <label class="form-check-label align-top">
-                        <input class="form-check-input" type="checkbox" (change)="checked=$event.target.checked">
+                        <input class="form-check-input" type="checkbox" (change)="checked=$event.target.checked" [checked]="checked">
                         <span class="form-check-sign"></span>
                     </label>
                 </div>
             </th>
-            <th scope="col" mat-sort-header="name" (sort)="onSort($event)">Name</th>
-            <th scope="col" mat-sort-header="email" (sort)="onSort($event)">Email</th>
-            <th scope="col" mat-sort-header="access" (sort)="onSort($event)">Access</th>
-            <th scope="col" mat-sort-header="provider" (sort)="onSort($event)">Provider</th>
-            <th scope="col" mat-sort-header="isBlock" (sort)="onSort($event)">isBlock</th>
+            <th scope="col" mat-sort-header="name">Name</th>
+            <th scope="col" mat-sort-header="email">Email</th>
+            <th scope="col" mat-sort-header="access">Access</th>
+            <th scope="col" mat-sort-header="provider">Provider</th>
+            <th scope="col" mat-sort-header="isBlock">isBlock</th>
             <th scope="col" >Change</th>
         </tr>
         </thead>
