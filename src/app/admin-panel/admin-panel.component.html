@@ -18,46 +18,48 @@
             <button class="btn btn-danger" (click)="toggleAccessUsers()">Toggle access</button>
         </div>
     </div>
-    <table *ngIf="users" class="table table-striped" matSort (matSortChange)="sortUsers($event)">
-        <thead>
-        <tr>
-            <th scope="col" >
-                <div class="form-check">
-                    <label class="form-check-label align-top">
-                        <input class="form-check-input" type="checkbox" (change)="checked=$event.target.checked" [checked]="checked">
-                        <span class="form-check-sign"></span>
-                    </label>
-                </div>
-            </th>
-            <th scope="col" mat-sort-header="name">Name</th>
-            <th scope="col" mat-sort-header="email">Email</th>
-            <th scope="col" mat-sort-header="access">Access</th>
-            <th scope="col" mat-sort-header="provider">Provider</th>
-            <th scope="col" mat-sort-header="isBlock">isBlock</th>
-            <th scope="col" >Change</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let user of (sortedUsers | usersFilter: nameSearch: emailSearch); trackBy: trackByUsers">
-            <th scope="row">
-                <div class="form-check">
-                    <label class="form-check-label align-top">
-                        <input class="form-check-input check" [value]="user._id" type="checkbox" [checked]="checked">
-                        <span class="form-check-sign"></span>
-                    </label>
-                </div>
-            </th>
-            <td scope="row"><a href="#" [routerLink] = "['/profile', user._id]">{{user.name}}</a></td>
-            <td scope="row">{{ user.email }}</td>
-            <td scope="row">{{ user.access }}</td>
-            <td scope="row">{{ user.provider }}</td>
-            <td scope="row">{{ user.isBlock }}</td>
-            <td scope="row">
-                <a href="#" [routerLink]="['/profile', user._id, 'change']" class="btn btn-outline-danger btn-sm input-sm">
-                    <i class="fa fa-edit"></i>
-                </a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table *ngIf="users" class="table table-striped" matSort (matSortChange)="sortUsers($event)">
+            <thead>
+            <tr>
+                <th scope="col" >
+                    <div class="form-check">
+                        <label class="form-check-label align-top">
+                            <input class="form-check-input" type="checkbox" (change)="checked=$event.target.checked" [checked]="checked">
+                            <span class="form-check-sign"></span>
+                        </label>
+                    </div>
+                </th>
+                <th scope="col" mat-sort-header="name">Name</th>
+                <th scope="col" mat-sort-header="email">Email</th>
+                <th scope="col" mat-sort-header="access">Access</th>
+                <th scope="col" mat-sort-header="provider">Provider</th>
+                <th scope="col" mat-sort-header="isBlock">isBlock</th>
+                <th scope="col" >Change</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let user of (sortedUsers | usersFilter: nameSearch: emailSearch); trackBy: trackByUsers">
+                <th scope="row">
+                    <div class="form-check">
+                        <label class="form-check-label align-top">
+                            <input class="form-check-input check" [value]="user._id" type="checkbox" [checked]="checked">
+                            <span class="form-check-sign"></span>
+                        </label>
+                    </div>
+                </th>
+                <td scope="row"><a href="#" [routerLink] = "['/profile', user._id]">{{user.name}}</a></td>
+                <td scope="row">{{ user.email }}</td>
+                <td scope="row">{{ user.access }}</td>
+                <td scope="row">{{ user.provider }}</td>
+                <td scope="row">{{ user.isBlock }}</td>
+                <td scope="row">
+                    <a href="#" [routerLink]="['/profile', user._id, 'change']" class="btn btn-outline-danger btn-sm input-sm">
+                        <i class="fa fa-edit"></i>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>

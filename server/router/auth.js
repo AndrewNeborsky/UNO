@@ -58,15 +58,19 @@ router.post('/login', (req, res) => {
             if(!user) {
                 res.status(401).send('Email is not found')
             } else {
-                bCript.compare(data.password, user.password, (err, same) => {
-                    if (same === true) {
-                        res.status(201).send({
-                            token: generateToken(user)
-                        })
-                    } else {
-                        res.status(401).send('Wrong password')
-                    }
-                })
+                if (user.isBlock === true) {
+                    res.status(423).send('You are blocked')
+                } else {
+                    bCript.compare(data.password, user.password, (err, same) => {
+                        if (same === true) {
+                            res.status(201).send({
+                                token: generateToken(user)
+                            })
+                        } else {
+                            res.status(401).send('Wrong password')
+                        }
+                    })
+                }
             }
         }
     })
@@ -80,9 +84,13 @@ router.post('/socialLogin', (req, res) => {
             if(!user) {
                 res.status(401).send('User is not found')
             } else {
-                res.status(201).send({
-                    token: generateToken(user)
-                })
+                if (user.isBlock === true) {
+                    res.status(423).send('You are blocked')
+                } else {
+                    res.status(201).send({
+                        token: generateToken(user)
+                    })
+                }
             }
         }
     })

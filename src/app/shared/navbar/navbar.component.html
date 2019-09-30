@@ -11,7 +11,7 @@
         <div class="navbar-collapse" id="navbarToggler">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" *ngIf="checkLogin() && !checkPath('auth '+ user_id)" (click)="sidebarClose()" (click)="getProfile()">
+                    <a class="nav-link" *ngIf="checkLogin() && !checkPath('auth '+ thisUser._id)" (click)="sidebarClose()" (click)="getProfile()">
                         <i class="nc-icon nc-single-02"></i>
                         Profile
                     </a>
@@ -29,7 +29,7 @@
                     </a>
                 </li>
                 <li class="nav-item" *ngIf="!checkPath('auth')">
-                    <button class="btn btn-danger btn-round" *ngIf="!checkLogin()" routerLink="/auth" >Log in</button>
+                    <button class="btn btn-danger btn-round" *ngIf="!checkLogin()" routerLink="/auth" (click)="sidebarClose()">Log in</button>
                     <button class="btn btn-danger btn-round" *ngIf="checkLogin()" (click)="logout()">Log out</button>
                 </li>
             </ul>

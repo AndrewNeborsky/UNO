@@ -20,10 +20,17 @@ export class AuthComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.auth.socialLogin(this.id).subscribe(res => {
-      localStorage.setItem('token', res['token'])
-      this.router.navigate(['/'])
-    })
+    if (this.id) {
+      this.auth.socialLogin(this.id).subscribe(
+        res => {
+        localStorage.setItem('token', res['token'])
+        this.router.navigate(['/'])
+        }, 
+        err => {
+          if(err.status === 401 || err.status === 423) this.openAlert(err['error'])
+        }
+      )
+    }
   }
 
   openAlert(text: string){

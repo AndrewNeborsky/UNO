@@ -20,6 +20,7 @@ export class NavbarComponent implements OnInit {
 
     constructor(public location: Location, private element : ElementRef, private auth: AuthService, private router: Router) {
         this.sidebarVisible = false;
+        this.thisUser = new User();
     }
 
     ngOnInit() {
@@ -73,6 +74,7 @@ export class NavbarComponent implements OnInit {
 
     logout() {
         this.auth.logout()
+        this.sidebarClose()
     }
 
     getProfile() {

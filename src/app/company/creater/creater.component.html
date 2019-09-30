@@ -77,8 +77,8 @@
         [uploader]="uploader"
         class="rounded my-drop-zone p-4 m-3 text-center">
         Drag and Drop your images here or
-        <label for="upload" class="btn btn-outline-danger btn-sm">Browse</label> 
         <input type="file" id="upload" class="custom-control-input" ng2FileSelect [uploader]="uploader" multiple/>
+        <label for="upload" class="btn btn-outline-danger btn-sm">Browse</label> 
     </div>
     <div class="row m-2 img_box"> 
         <div class="mx-2 position-relative" *ngFor="let image of company.images" >

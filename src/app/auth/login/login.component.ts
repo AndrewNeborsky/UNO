@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/'])
         },
         err => {
-          if(err.status === 401) this.alertOpen.emit(err['error'])
+          if(err.status === 401 || err.status === 423) this.alertOpen.emit(err['error'])
         }
       )
     } else {

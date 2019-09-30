@@ -1,6 +1,12 @@
 .my-drop-zone { 
-    border: dotted 3px lightgray; 
-  }
-  .nv-file-over { 
-    border: dotted 3px rgb(255, 94, 0); 
-  }
+  border: dotted 3px lightgray; 
+}
+.nv-file-over { 
+  border: dotted 3px rgb(255, 94, 0); 
+}
+  
+.custom-control-input {
+  position: absolute;
+  left: 0%;
+  top: 40%;
+}

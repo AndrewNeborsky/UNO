@@ -25,7 +25,7 @@
     </div>
     <ngb-carousel [showNavigationArrows]="false">
         <ng-template ngbSlide *ngFor="let company of companies">
-            <div class="page-header page-header-xs rounded-lg" data-parallax="true" [style.background-image]="sanitizer.bypassSecurityTrustStyle(
+            <div class="page-header page-header-xs rounded-lg pb-4" data-parallax="true" [style.background-image]="sanitizer.bypassSecurityTrustStyle(
                 'url('+getBackground(company.images[0])+')')">
                 <div class="filter"></div>
                 <div class="container">
