@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import * as io from 'socket.io-client';
 import { Comment } from '../models/comment.model';
 import { Observable } from 'rxjs';
+import Config from '../config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommentService {
 
-  private url = 'http://localhost:3000';
+  private url = Config.host;
   private socket;
 
   constructor() { 

@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user.model';
 import { PayHistory } from '../models/payHistory.model';
+import Config from '../config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProfileService {
 
-  private url = 'http://localhost:3000/api/profile/'
+  private url = Config.host + '/api/profile/'
 
   constructor(private http: HttpClient) { }
 

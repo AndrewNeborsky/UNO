@@ -1,41 +1,53 @@
 <div class="page-header page-header-xs" data-parallax="true" [style.background-image]="background">
-    <div class="filter"></div>
-    <div class="container">
-        <div class="motto text-center">
-            <button class="btn btn-outline-danger" routerLink="../"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button>
-        </div>
+  <div class="filter"></div>
+  <div class="container">
+    <div class="motto text-center">
+      <button class="btn btn-outline-danger" routerLink="../">
+        <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+      </button>
     </div>
-</div><br/>
+  </div>
+</div>
+<br />
 
 <div class="container">
-    <div class="card">
-        <h5 class="card-header d-flex">
-            <div class="mr-auto">For Thanks</div>
-            <div>Price: 1 C.U. and more</div>
-        </h5>
-        <div class="card-body">
-            <p class="card-text">Make a pledge without bonuces</p><br/>
-            <form class="d-flex" (submit)="setSupport(amount)">
-                <div class="col-md-3">
-                    <input type="number" name="For Thanks" class="form-control" min="1" value="1" #amount>
-                </div>
-                <button type="submit" class="btn btn-danger">Pay</button>
-            </form>
+  <div class="card">
+    <h5 class="card-header d-flex">
+      <div class="mr-auto">For Thanks</div>
+      <div>Price: 1 C.U. and more</div>
+    </h5>
+    <div class="card-body">
+      <p class="card-text">Make a pledge without bonuces</p>
+      <br />
+      <form class="d-flex" (submit)="setSupport(amount)">
+        <div class="col-md-3">
+          <input type="number" name="For Thanks" class="form-control" min="1" value="1" #amount />
         </div>
+        <button type="submit" class="btn btn-danger">Pay</button>
+      </form>
     </div>
-    <div class="card" *ngFor="let bonuce of bonuces">
-        <h5 class="card-header d-flex">
-            <div class="mr-auto">{{bonuce.name}}</div>
-            <div>Price: {{bonuce.price}} C.U. and more</div>
-        </h5>
-        <div class="card-body">
-            <p class="card-text">{{bonuce.about}}</p><br/>
-            <form class="d-flex" (submit)="setSupport(amount)">
-                <div class="col-md-3">
-                    <input type="number" class="form-control" [name]="bonuce.name" [min]="bonuce.price" [value]="bonuce.price" #amount>
-                </div>
-                <button type="submit" class="btn btn-danger">Pay</button>
-            </form>
+  </div>
+  <div class="card" *ngFor="let bonuce of bonuces">
+    <h5 class="card-header d-flex">
+      <div class="mr-auto">{{ bonuce.name }}</div>
+      <div>Price: {{ bonuce.price }} C.U. and more</div>
+    </h5>
+    <div class="card-body">
+      <p class="card-text">{{ bonuce.about }}</p>
+      <br />
+      <form class="d-flex" (submit)="setSupport(amount)">
+        <div class="col-md-3">
+          <input
+            type="number"
+            class="form-control"
+            [name]="bonuce.name"
+            [min]="bonuce.price"
+            [value]="bonuce.price"
+            #amount
+          />
         </div>
+        <button type="submit" class="btn btn-danger">Pay</button>
+      </form>
     </div>
+  </div>
 </div>
